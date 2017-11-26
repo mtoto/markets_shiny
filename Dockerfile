@@ -2,7 +2,7 @@ FROM rocker/shiny
 MAINTAINER Tamas Szilagyi (tszilagyi@outlook.com)
 
 ## install R package dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y gnupg2 \
     libssl-dev \
     ## clean up
     && apt-get clean \ 
