@@ -4,17 +4,16 @@
 #
 # http://shiny.rstudio.com
 library(shiny)
-library(data.table)
 library(tidyquant)
 
 shinyServer(function(input, output) {
 
         output$plot <- renderPlotly({
-                # gedata from API
+                # get data from API
                 indices <- c("AMZN") %>%
                         tq_get(get = "stock.prices", from = "2000-01-01", to = "2017-11-01")
                 
-                # draw the histogram with the specified number of bins
+                # draw line chart for closing price
                 n <- 20
                 p<-indices %>%
                         ggplot(aes(x = date, y = close)) +
