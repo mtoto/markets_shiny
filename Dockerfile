@@ -3,7 +3,7 @@ MAINTAINER Tamas Szilagyi (tszilagyi@outlook.com)
 
 ## install R package dependencies
 RUN apt-get update && apt-get install -y gnupg2 \
-    libxml2 \
+    libxml2-dev \
     libssl-dev \
     ## clean up
     && apt-get clean \ 
