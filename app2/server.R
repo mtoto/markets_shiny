@@ -58,34 +58,44 @@ shinyServer(function(input, output) {
                 trade_t %>% filter(date >= input$date & symbol == "BOPGSTB")
         })
         
-        # import plot
-        output$plot_import <- renderPlotly({ plot_ly(trades_import(), x = ~date, y = ~ratio, 
-                                               split = ~country, type = "bar",
-                                               hoverinfo = 'text',
-                                               text = ~paste(country, date,
-                                                             '<br> Imports (millions): ', price,
-                                                             '</br> Percentage', paste0(round(ratio*100,2)," %"))) %>%
-                        layout(title = "Largest Imports to the USA", barmode = "stack",
-                               xaxis = list(title = "Date"),
-                               yaxis = list(title = "Imports (%)", tickformat = ".0%"),
-                                legend = list(orientation = 'h'))
-                        })
         
-        # export plot
-        output$plot_export <- renderPlotly({ plot_ly(trades_export(), 
-                                                     x = ~ date, 
-                                                     y = ~ratio, 
-                                                     split = ~country, 
-                                                     type = "bar",
-                                                     hoverinfo = 'text',
-                                                     text = ~paste(country, date,
-                                                             '<br> Export (millions): ', price,
-                                                             '</br> Percentage', paste0(round(ratio*100,2)," %"))) %>%
-                        layout(title = "Largest Exports from the USA", 
-                               barmode = "stack",
+        # export & import plot
+        output$plot_export <- renderPlotly({ 
+                
+                plot_export <- plot_ly(trades_export(), 
+                        x = ~ date, 
+                        y = ~ratio, 
+                        split = ~country, 
+                        type = "bar",
+                        hoverinfo = 'text',
+                        text = ~paste(country, date,
+                                      '<br> Export (millions): ', price,
+                                      '</br> Percentage', paste0(round(ratio*100,2)," %"))) %>%
+                        layout(barmode = "stack",
                                xaxis = list(title = "Date"),
                                yaxis = list(title = "Imports (%)", tickformat = ".0%"),
-                               legend = list(orientation = 'h'))  
+                               showlegend = FALSE)
+                
+                plot_import <- 
+                        plot_ly(trades_import(), x = ~date, y = ~ratio, 
+                        split = ~country, type = "bar",
+                        hoverinfo = 'text',
+                        text = ~paste(country, date,
+                                      '<br> Imports (millions): ', price,
+                                      '</br> Percentage', paste0(round(ratio*100,2)," %"))) %>%
+                        layout(barmode = "stack",
+                               xaxis = list(title = "Date"),
+                               yaxis = list(title = "Imports (%)", tickformat = ".0%"),
+                               showlegend = FALSE)
+                
+                subplot(plot_import, plot_export) %>%
+                        layout(annotations = list(
+                                list(x = 0.2 , y = 1.05, text ="Largest Exports from the USA", 
+                                     showarrow = F, xref='paper', yref='paper'),
+                                list(x = 0.8 , y = 1.05, text = "Largest Imports to the USA", 
+                                     showarrow = F, xref='paper', yref='paper'))
+                        )
+                
                 })
         
         # totals plot

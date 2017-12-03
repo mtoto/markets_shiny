@@ -15,16 +15,21 @@ body <- dashboardBody(
         fluidRow(
                 tabBox(type = "tabs",
                             tabPanel("Trade Balance", 
-                               plotlyOutput("plot_balance", width = 1000, height = 400)),
+                               plotlyOutput("plot_balance", width = 900, height = 400)),
                             tabPanel("Import and Export to / from the USA", 
-                                     plotlyOutput("plot_total", width = 1000, height = 400)),
+                                     plotlyOutput("plot_total", width = 900, height = 400)),
                             
                        width = 1000
                 )
         ),
         
-        fluidRow(box(plotlyOutput("plot_import", width = 500, height = 400),width = 6),
-                 box(plotlyOutput("plot_export", width = 500, height = 400)),width = 6)
+        fluidRow(
+                tabBox(type = "tabs",
+                        tabPanel("Exports / Imports per country",
+                                 plotlyOutput("plot_export", width = 1000, height = 400)),
+                       width = 1000
+                )
+        )
 )
 
 sidebar <- dashboardSidebar(sidebarMenu(
