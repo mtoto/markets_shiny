@@ -37,8 +37,15 @@ RUN install2.r --error \
     plotly \
     shinydashboard \
     shinythemes \
+    shinytest \
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 ## assume shiny app is in build folder /shiny
 COPY ./app2 /srv/shiny-server/myapp/
+
+library(shiny)
+library(shinydashboard)
+library(plotly)
+library(shinytest)
+library(shinythemes)
