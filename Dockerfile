@@ -33,9 +33,10 @@ RUN /sbin/ldconfig
 ## Install packages from CRAN
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
-    tidyquant\ 
-    plotly\
-    shinydashboard\
+    tidyquant \ 
+    plotly \
+    shinydashboard \
+    shinythemes \
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
