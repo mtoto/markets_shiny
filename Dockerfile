@@ -41,4 +41,4 @@ RUN install2.r --error \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 ## assume shiny app is in build folder /shiny
-COPY ./app /srv/shiny-server/myapp/
+COPY ./app2 /srv/shiny-server/myapp/
