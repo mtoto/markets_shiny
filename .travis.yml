@@ -6,13 +6,12 @@ services:
 
 before_install:
 - docker build -t markets-shiny .
-- docker run --rm -p 3838:3838 markets-shiny:latest --name test
+- docker run --rm -p 3838:3838 markets-shiny:latest
 - docker ps -a
 
 script:
 - docker exec test R -f run_tests.R
-after_script:
-- docker rm -f test
+
 
 
 
