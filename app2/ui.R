@@ -7,7 +7,7 @@ library(shinythemes)
 options(shiny.sanitize.errors = FALSE)
 
 header <- dashboardHeader(
-        title = "Investments Dashboard"
+        title = "USA Trade Dashboard"
 )
 
 body <- dashboardBody(
@@ -25,7 +25,7 @@ body <- dashboardBody(
         
         fluidRow(
                 tabBox(type = "tabs",
-                        tabPanel("Exports / Imports per country",
+                        tabPanel("Largest Exporters to -, and Importers from the USA ",
                                  plotlyOutput("plot_export", width = 1000, height = 400)),
                        width = 1000
                 )
@@ -34,7 +34,8 @@ body <- dashboardBody(
 
 sidebar <- dashboardSidebar(sidebarMenu(
         
-        dateInput("date", "Choose a starting date", value = "2014-01-01", max = Sys.Date())
+        dateInput("date1", "Choose a starting date", value = "2014-01-01", max = Sys.Date()),
+        dateInput("date2", "Choose an ending date", value = Sys.Date() - 5, max = Sys.Date())
 )
 )
 

@@ -1,5 +1,6 @@
 library(shiny)
 library(tidyquant)
+source("functions.R")
 
 # get data from API
 import_series <- c("IMPJP", "IMPCH", "IMPMX", "IMPCA", "IMPGE")
@@ -15,14 +16,13 @@ shinyServer(function(input, output) {
         
         # imports data
         trades_import <- reactive({ 
-                trade_i %>% filter(date >= input$date) %>% 
+                trade_i %>% filter(date >= input$date1 &
+                                   date <= input$date2) %>% 
                 group_by(date) %>%
                 mutate(total = sum(price),
-                       country = factor(ifelse(symbol == "IMPJP", "Japan",
-                                        ifelse(symbol == "IMPCH", "China",
-                                        ifelse(symbol == "IMPMX", "Mexico",
-                                        ifelse(symbol == "IMPCA", "Canada","Germany")))),
-                                        levels = c("China", "Mexico","Canada","Japan","Germany"))) %>%
+                       country = factor(label_symbols(symbol),
+                                        levels = c("China", "Mexico","Canada",
+                                                   "Japan","Germany"))) %>%
                 group_by(symbol) %>%
                 mutate(ratio = price / total) %>%
                 ungroup() 
@@ -30,32 +30,48 @@ shinyServer(function(input, output) {
         
         # export data
         trades_export <- reactive({ 
-                trade_e %>% filter(date >= input$date) %>% 
+                trade_e %>% filter(date >= input$date1 &
+                                   date <= input$date2) %>% 
                         group_by(date) %>%
                         mutate(total = sum(price),
-                               country = factor(ifelse(symbol == "EXPJP", "Japan",
-                                                ifelse(symbol == "EXPCH", "China",
-                                                ifelse(symbol == "EXPMX", "Mexico",
-                                                ifelse(symbol == "EXPCA", "Canada","Germany")))),
-                                                levels = c("China", "Mexico","Canada","Japan","Germany"))) %>%
+                               country = factor(label_symbols(symbol),
+                                                levels = c("China", "Mexico","Canada",
+                                                           "Japan","Germany"))) %>%
                         group_by(symbol) %>%
                         mutate(ratio = price / total) %>%
                         ungroup() 
         })
         
-        # total export data
+        # total import data
         trades_import_t <- reactive({
-                trade_t %>% filter(date >= input$date & symbol == "IMP0004")
+                trade_t %>% filter(date >= input$date1 &
+                                   date <= input$date2 & 
+                                   symbol == "IMP0004")
         })
         
         # total export data
         trades_export_t <- reactive({
-                trade_t %>% filter(date >= input$date & symbol == "EXP0004")
+                trade_t %>% filter(date >= input$date1 &
+                                   date <= input$date2 & 
+                                   symbol == "EXP0004")
         })
         
         # trade balance data
         trades_balance <- reactive({
-                trade_t %>% filter(date >= input$date & symbol == "BOPGSTB")
+                trade_t %>% filter(date >= input$date1 &
+                                   date <= input$date2 & 
+                                   symbol == "BOPGSTB")
+        })
+        
+        # export / import data (sankey)
+        trades_sankey <- reactive({
+                trade_i %>% filter(date >= input$date1 &
+                                   date <= input$date2) %>% 
+                        select(source = symbol, price) %>%
+                        mutate(target = "USA") %>%
+                        bind_rows(trade_e %>% filter(date == input$date) %>%
+                                          select(target = symbol, price) %>%
+                                          mutate(source = "USA"))
         })
         
         
@@ -90,9 +106,9 @@ shinyServer(function(input, output) {
                 
                 subplot(plot_import, plot_export) %>%
                         layout(annotations = list(
-                                list(x = 0.2 , y = 1.05, text ="Largest Exports from the USA", 
+                                list(x = 0.2 , y = 1.05, text ="Largest Exporters to the USA", 
                                      showarrow = F, xref='paper', yref='paper'),
-                                list(x = 0.8 , y = 1.05, text = "Largest Imports to the USA", 
+                                list(x = 0.8 , y = 1.05, text = "Largest Importers from the USA", 
                                      showarrow = F, xref='paper', yref='paper'))
                         )
                 

@@ -39,8 +39,10 @@ RUN install2.r --error \
     shinythemes \
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-RUN Rscript -e "devtools::install_github('rstudio/shinytest')"
 
+## Install packages from github
+RUN Rscript -e "devtools::install_github('rstudio/shinytest')"
 
 ## assume shiny app is in build folder /shiny
 COPY ./app2 /srv/shiny-server/myapp/
+

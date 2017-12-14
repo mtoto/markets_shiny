@@ -1,0 +1,18 @@
+language: r
+sudo: required
+
+services:
+  - docker
+
+before_install:
+- docker build -t markets-shiny
+- docker run -d -p 80:3838 markets-shiny:latest --name test
+- docker ps -a
+
+script:
+ - docker exec test R -f run_tests.R
+after_script:
+- docker rm -f test
+
+
+
