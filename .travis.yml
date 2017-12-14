@@ -6,7 +6,7 @@ services:
 
 before_install:
 - docker build -t markets-shiny .
-- docker run -d -p 80:3838 markets-shiny:latest --name test
+- docker run --rm -p 3838:3838 markets-shiny:latest --name test
 - docker ps -a
 
 script:
