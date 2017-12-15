@@ -36,7 +36,7 @@ RUN install2.r --error \
     tidyquant \ 
     plotly \
     shinydashboard \
-    shinythemes \
+    shinythemes \ 
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
