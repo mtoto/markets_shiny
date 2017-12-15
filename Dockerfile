@@ -46,3 +46,7 @@ RUN Rscript -e "devtools::install_github('rstudio/shinytest')"
 ## assume shiny app is in build folder /shiny
 COPY ./app2 /srv/shiny-server/myapp/
 
+## put test scripts in path
+ENV PATH="/srv/shiny-server/myapp:${PATH}"
+
+
