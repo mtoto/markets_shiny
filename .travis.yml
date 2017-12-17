@@ -10,7 +10,7 @@ before_install:
 - docker ps -a
 
 script:
-- docker exec test R -f /srv/shinyapps/app2/run_tests.R
+- docker exec test R -f /srv/shinyapps/myapp/run_tests.R
 
 after_script:
 - docker rm -f test
