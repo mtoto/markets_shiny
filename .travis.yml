@@ -5,8 +5,8 @@ services:
   - docker
 
 before_install:
-- docker build -t markets-shiny .
-- docker run --rm -d -p 3838:3838 --name test markets-shiny:latest
+- docker pull mtoto/shiny
+- docker run --rm -d -p 3838:3838 --name test mtoto/shiny:latest
 - docker ps -a
 
 script:
