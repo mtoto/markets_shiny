@@ -43,7 +43,7 @@ RUN install2.r --error \
 ## Install packages from github
 RUN Rscript -e "devtools::install_github('rstudio/shinytest')"
 
-## assume shiny app is in build folder /shiny
+## assume shiny app is in build folder /app2
 COPY ./app2 /srv/shiny-server/myapp/
 
 
