@@ -6,7 +6,7 @@ services:
 
 before_install:
 - docker pull mtoto/shiny
-- docker build -t mtoto/shiny . --cache-from mtoto/shiny:latest
+- docker build --cache-from mtoto/shiny:latest -t mtoto/shiny . 
 - docker run --rm -d -p 3838:3838 --name test mtoto/shiny:latest
 - docker ps -a
 
