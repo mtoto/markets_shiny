@@ -1,43 +1,6 @@
 FROM rocker/shiny
 MAINTAINER Tamas Szilagyi (tszilagyi@outlook.com)
 
-# Dependencies we just need for building phantomjs
-ENV buildDependencies\
-  wget unzip python build-essential g++ flex bison gperf\
-  ruby perl libsqlite3-dev libssl-dev libpng-dev
-
-# Dependencies we need for running phantomjs
-ENV phantomJSDependencies\
-  libicu-dev libfontconfig1-dev libjpeg-dev libfreetype6 openssl
-
-# Installing phantomjs
-RUN \
-    # Installing dependencies
-    apt-get update -yqq \
-&&  apt-get install -fyqq ${buildDependencies} ${phantomJSDependencies}\
-    # Downloading src, unzipping & removing zip
-&&  mkdir phantomjs \
-&&  cd phantomjs \
-&&  wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-source.zip \
-&&  unzip phantomjs-2.0.0-source.zip \
-&&  rm -rf /phantomjs/phantomjs-2.0.0-source.zip \
-    # Building phantom
-&&  cd phantomjs-2.0.0/ \
-&&  ./build.sh --jobs 1 --confirm --silent \
-    # Removing everything but the binary
-&&  ls -A | grep -v bin | xargs rm -rf \
-    # Symlink phantom so that we are able to run `phantomjs`
-&&  ln -s /phantomjs/phantomjs-2.0.0/bin/phantomjs /usr/local/share/phantomjs \
-&&  ln -s /phantomjs/phantomjs-2.0.0/bin/phantomjs /usr/local/bin/phantomjs \
-&&  ln -s /phantomjs/phantomjs-2.0.0/bin/phantomjs /usr/bin/phantomjs \
-    # Removing build dependencies, clean temporary files
-&&  apt-get purge -yqq ${buildDependencies} \
-&&  apt-get autoremove -yqq \
-&&  apt-get clean \
-&&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    # Checking if phantom works
-&&  phantomjs -v
-
 ## install R package dependencies
 RUN apt-get update && apt-get install -y gnupg2 \
     libxml2-dev \
@@ -78,7 +41,9 @@ RUN install2.r --error \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 ## Install packages from github
-RUN Rscript -e "devtools::install_github('rstudio/shinytest')"
+RUN Rscript -e "devtools::install_github('rstudio/shinytest', 'rstudio/webdriver')"
+## Install phantomjs
+RUN Rscript -e "webdriver::install_phantomjs()"
 
 ## assume shiny app is in build folder /app2
 COPY ./app2 /srv/shiny-server/myapp/
