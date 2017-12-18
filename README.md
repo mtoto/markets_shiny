@@ -1,4 +1,5 @@
-<https://travis-ci.org/mtoto/markets_shiny.svg?branch=master>
+[\[Travis Build
+Status\](https://travis-ci.org/mtoto/markets\_shiny.svg?branch=master](https://travis-ci.org/mtoto/markets_shiny)
 
 Testing a Shiny App
 ===================
