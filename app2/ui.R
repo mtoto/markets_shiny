@@ -7,7 +7,7 @@ library(shinythemes)
 options(shiny.sanitize.errors = FALSE)
 
 header <- dashboardHeader(
-        title = "USA Trade Dashboard"
+        title = "USA Trade Dashboard v1"
 )
 
 body <- dashboardBody(
