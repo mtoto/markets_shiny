@@ -5,16 +5,19 @@ services:
   - docker
 
 before_install:
-- docker pull mtoto/shiny
-- docker build --cache-from mtoto/shiny:latest -t mtoto/shiny . 
+- docker pull mtoto/shiny:latest
+- docker build --cache-from mtoto/shiny:latest -t mtoto/shiny:latest . 
 - docker run --rm -d -p 3838:3838 --name test mtoto/shiny:latest
 - docker ps -a
 
 script:
 - docker exec test R -f srv/shiny-server/myapp/run_tests.R
 
-after_script:
+after_success:
 - docker rm -f test
+- docker login -u mtoto -p $DOCKER_PASSWORD
+- docker tag mtoto/shiny:latest mtoto/shiny:$TRAVIS_BUILD_NUMBER
+- docker push mtoto/shiny
 
 
 
