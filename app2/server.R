@@ -74,6 +74,10 @@ shinyServer(function(input, output) {
                                           mutate(source = "USA"))
         })
         
+        exportTestValues(trades_import = { trades_import() },
+                         trades_export = { trades_export() } )
+        
+        
         
         # export & import plot
         output$plot_export <- renderPlotly({ 
