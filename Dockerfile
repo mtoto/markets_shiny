@@ -5,7 +5,7 @@ MAINTAINER Tamas Szilagyi (tszilagyi@outlook.com)
 RUN apt-get update && apt-get install -y gnupg2 \
     libxml2-dev \
     libssl-dev \
-    nano \
+    nano 
     ## clean up
     && apt-get clean \ 
     && rm -rf /var/lib/apt/lists/ \ 

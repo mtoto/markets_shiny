@@ -13,24 +13,18 @@ header <- dashboardHeader(
 body <- dashboardBody(
         
         fluidRow(
-                tabBox(type = "tabs",
-                            tabPanel("Trade Balance", 
-                               plotlyOutput("plot_balance", width = 900, height = 400)),
-                            tabPanel("Import and Export to / from the USA", 
-                                     plotlyOutput("plot_total", width = 900, height = 400)),
-                            
-                       width = 1000
-                )
+                box(plotOutput("plot_balance", height = 250), width = 12)                
         ),
         
         fluidRow(
-                tabBox(type = "tabs",
-                        tabPanel("Largest Exporters to -, and Importers from the USA ",
-                                 plotlyOutput("plot_export", width = 1000, height = 400)),
-                       width = 1000
+                box(plotOutput("plot_total", height = 250), width = 12)                
+                ),
+        
+        fluidRow(
+                box(plotOutput("plot_export", height = 250)),
+                box(plotOutput("plot_import", height = 250))
                 )
         )
-)
 
 sidebar <- dashboardSidebar(sidebarMenu(
         
