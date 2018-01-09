@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y gnupg2 \
 ## Install packages from CRAN
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
+    devtools \
     dplyr \
     tidyr \ 
     fuzzyjoin \
