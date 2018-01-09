@@ -1,13 +1,9 @@
 library(shiny)
 library(shinydashboard)
-library(plotly)
-library(shinytest)
 library(shinythemes)
 
-options(shiny.sanitize.errors = FALSE)
-
 header <- dashboardHeader(
-        title = "USA Trade Dashboard v1"
+        title = "USA Trade Dashboard"
 )
 
 body <- dashboardBody(
