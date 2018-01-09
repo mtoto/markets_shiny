@@ -31,7 +31,7 @@ test_that("Function one works", {
         check.attributes = FALSE)
 })
 
-shiny app test
+#shiny app test
 test_that("Application works", {
 
         expect_pass(testApp("/srv/shiny-server/myapp/",
