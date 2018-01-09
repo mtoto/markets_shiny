@@ -22,7 +22,6 @@ RUN install2.r --error \
     ggplot2 \
     shinydashboard \
     shinythemes \ 
-    shinytest \
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
