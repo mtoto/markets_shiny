@@ -1,5 +1,5 @@
-source("functions.R")
-source("data.R")
+source("srv/shiny-server/myapp/functions.R")
+source("srv/shiny-server/myapp/data.R")
 
 shinyServer(function(input, output) {
         

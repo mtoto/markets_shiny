@@ -11,8 +11,6 @@ library(shinydashboard)
 library(shinytest)
 library(shinythemes)
 
-
-
 # retrieve data as list of xts objects
 list_xts <- function(symbols) {
         
