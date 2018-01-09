@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y gnupg2 \
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
     dplyr \
+    tidyr \ 
     fuzzyjoin \
     stringr \
     ggthemes \
@@ -21,6 +22,7 @@ RUN install2.r --error \
     ggplot2 \
     shinydashboard \
     shinythemes \ 
+    shinytest \
     ## clean up
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
