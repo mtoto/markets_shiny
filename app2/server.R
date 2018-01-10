@@ -62,7 +62,7 @@ shinyServer(function(input, output) {
         # export plot
         output$plot_export <- renderPlot({ 
                 
-                ggplot(trades_export(), aes(x = date, y = ratio, fill = country)) +
+                p_e<<-ggplot(trades_export(), aes(x = date, y = ratio, fill = country)) +
                         geom_col() +
                         scale_y_continuous(labels=scales::percent) +
                         labs(y = "Share of Total") +
@@ -70,13 +70,14 @@ shinyServer(function(input, output) {
                         guides(color=FALSE)  +
                         scale_fill_ptol("cyl") +
                         theme_minimal()
+                p_e
 
                 })
         
         # import plot
         output$plot_import <- renderPlot({ 
                 
-                ggplot(trades_import() , aes(x = date, y = ratio, fill = country)) +
+                p_i <<- ggplot(trades_import() , aes(x = date, y = ratio, fill = country)) +
                         geom_col() +
                         scale_y_continuous(labels=scales::percent) +
                         labs(y = "Share of Total") +
@@ -84,13 +85,14 @@ shinyServer(function(input, output) {
                         guides(color=FALSE)  +
                         scale_fill_ptol("cyl") +
                         theme_minimal()
+                p_i
 
         })
         
         # totals plot
         output$plot_total <- renderPlot({
                 
-                rbind(trades_export_t(), trades_import_t()) %>%
+                p_t<<-rbind(trades_export_t(), trades_import_t()) %>%
                         spread(symbol, price) %>%
                         ggplot(aes(x = date)) +
                         geom_line(aes(y = EXP0004, color = "red" )) +
@@ -103,19 +105,27 @@ shinyServer(function(input, output) {
                         guides(color=FALSE) +
                         scale_color_ptol("cyl") +
                         theme_minimal()
+                p_t
         })
         
         # trade balance plot
         output$plot_balance <- renderPlot({
                 
-                        ggplot(trades_balance(),aes(x = date, y = price)) +
+                        p_b<<-ggplot(trades_balance(),aes(x = date, y = price)) +
                         geom_line() +
                         labs(y = "Trade Balance in millions USD") +
                         ggtitle("USA Trade Balance") +
                         guides(color=FALSE) +
                         scale_color_ptol("cyl") +
                         theme_minimal()
+                        p_b
         })
+        
+        exportTestValues(plot_balance = { ggplot_build(p_b)$data },
+                         plot_total = { ggplot_build(p_t)$data },
+                         plot_import = { ggplot_build(p_i)$data },
+                         plot_export = { ggplot_build(p_e)$data } )
+        
         
 })
 
