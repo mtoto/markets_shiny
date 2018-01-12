@@ -1,5 +1,5 @@
-source("/srv/shiny-server/myapp/functions.R")
-source("/srv/shiny-server/myapp/data.R")
+source("functions.R")
+source("data.R")
 
 shinyServer(function(input, output) {
         
@@ -111,20 +111,20 @@ shinyServer(function(input, output) {
         # trade balance plot
         output$plot_balance <- renderPlot({
                 
-                        p_b<<-ggplot(trades_balance(),aes(x = date, y = price)) +
-                        geom_line() +
-                        labs(y = "Trade Balance in millions USD") +
-                        ggtitle("USA Trade Balance") +
-                        guides(color=FALSE) +
-                        scale_color_ptol("cyl") +
-                        theme_minimal()
-                        p_b
+                        p_b <<- ggplot(trades_balance(), aes(x = date, y = price)) +
+                                geom_line() +
+                                labs(y = "Trade Balance in millions USD") +
+                                ggtitle("USA Trade Balance") +
+                                guides(color = FALSE) +
+                                scale_color_ptol("cyl") +
+                                theme_minimal()
+                                p_b
         })
         
         exportTestValues(plot_balance = { ggplot_build(p_b)$data },
-                         plot_total = { ggplot_build(p_t)$data },
-                         plot_import = { ggplot_build(p_i)$data },
-                         plot_export = { ggplot_build(p_e)$data } )
+                         plot_total   = { ggplot_build(p_t)$data },
+                         plot_import  = { ggplot_build(p_i)$data },
+                         plot_export  = { ggplot_build(p_e)$data } )
         
         
 })
