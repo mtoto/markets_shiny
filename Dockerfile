@@ -2,12 +2,12 @@ FROM rocker/shiny
 MAINTAINER Tamas Szilagyi (tszilagyi@outlook.com)
 
 ## install R package dependencies (and clean up)
-# RUN apt-get update && apt-get install -y gnupg2 \
-#     libxml2-dev \
-#     libssl-dev \
-#     && apt-get clean \ 
-#     && rm -rf /var/lib/apt/lists/ \ 
-#     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+ RUN apt-get update && apt-get install -y gnupg2 \
+     #libxml2-dev \
+     libssl-dev \
+     && apt-get clean \ 
+     && rm -rf /var/lib/apt/lists/ \ 
+     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
     
 ## install packages from CRAN (and clean up)
 RUN install2.r --error \ 
