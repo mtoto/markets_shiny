@@ -10,7 +10,7 @@ before_install:
 - docker run --rm -d -p 3838:3838 --name test mtoto/shiny:latest
 
 script:
-- docker exec test R -f srv/shiny-server/myapp/run_tests.R
+- docker exec test R -f /srv/shiny-server/usa-trade/run_tests.R
 
 after_success:
 - docker rm -f test
