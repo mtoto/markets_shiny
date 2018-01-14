@@ -34,7 +34,7 @@ test_that("Function one works", {
 #shiny app test
 test_that("Application works", {
 
-        expect_pass(testApp("/srv/shiny-server/myapp/",
+        expect_pass(testApp("/srv/shiny-server/usa-trade/",
                             testnames = "dates",
                             compareImages = FALSE))
 })
