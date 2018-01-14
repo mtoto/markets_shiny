@@ -1,7 +1,7 @@
 library(testthat)
 library(shinytest)
 library(quantmod)
-source("/srv/shiny-server/myapp/functions.R")
+source("/srv/shiny-server/usa-trade/functions.R")
 options(shiny.testmode=TRUE)
 
 # test xts object
