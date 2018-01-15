@@ -22,4 +22,7 @@ RUN Rscript -e "webdriver::install_phantomjs()"
 ## assume shiny app is in build folder /app2
 COPY ./app2 /srv/shiny-server/usa-trade/
 
+## updated config file
+COPY ./shiny-server.conf /etc/shiny-server/shiny-server.conf
+
 
